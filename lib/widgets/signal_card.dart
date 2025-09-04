@@ -16,7 +16,7 @@ class SignalCard extends StatefulWidget {
   State<SignalCard> createState() => _SignalCardState();
 }
 
-class _SignalCardState extends State<SignalCard) with TickerProviderStateMixin {
+class _SignalCardState extends State<SignalCard> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   int _remainingSeconds = 0;
@@ -57,62 +57,6 @@ class _SignalCardState extends State<SignalCard) with TickerProviderStateMixin {
         }
       });
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (_) => _animationController.forward(),
-      onTapUp: (_) => _animationController.reverse(),
-      onTapCancel: () => _animationController.reverse(),
-      onTap: widget.onTap,
-      child: AnimatedBuilder(
-        animation: _scaleAnimation,
-        builder: (context, child) {
-          return Transform.scale(
-            scale: _scaleAnimation.value,
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              decoration: BoxDecoration(
-                gradient: _getGradient(),
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: _getAccentColor().withOpacity(0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Card(
-                elevation: 0,
-                color: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildHeader(),
-                      const SizedBox(height: 12),
-                      _buildDetails(),
-                      if (_remainingSeconds > 0) ...[
-                        const SizedBox(height: 12),
-                        _buildCountdown(),
-                      ],
-                      const SizedBox(height: 8),
-                      _buildFooter(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
   }
 
   Widget _buildHeader() {
@@ -368,5 +312,62 @@ class _SignalCardState extends State<SignalCard) with TickerProviderStateMixin {
         return Colors.orange;
     }
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => _animationController.forward(),
+      onTapUp: (_) => _animationController.reverse(),
+      onTapCancel: () => _animationController.reverse(),
+      onTap: widget.onTap,
+      child: AnimatedBuilder(
+        animation: _scaleAnimation,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: _scaleAnimation.value,
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              decoration: BoxDecoration(
+                gradient: _getGradient(),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: _getAccentColor().withOpacity(0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Card(
+                elevation: 0,
+                color: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildHeader(),
+                      const SizedBox(height: 12),
+                      _buildDetails(),
+                      if (_remainingSeconds > 0) ...[
+                        const SizedBox(height: 12),
+                        _buildCountdown(),
+                      ],
+                      const SizedBox(height: 8),
+                      _buildFooter(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
+
 
